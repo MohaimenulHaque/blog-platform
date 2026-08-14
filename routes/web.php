@@ -56,13 +56,9 @@ Route::get('/dashboard', function () {
 
 Route::get('/newsletter/unsubscribe/{token}', [NewsletterController::class, 'unsubscribe'])->name('newsletter.unsubscribe');
 Route::post('/newsletter/unsubscribe/{token}', [NewsletterController::class, 'unsubscribeConfirm'])->name('newsletter.unsubscribe.confirm');
-Route::post('/newsletter/subscribe', [NewsletterController::class, 'subscribe'])
-    ->middleware('throttle:5,10')
-    ->name('newsletter.subscribe');
+Route::post('/newsletter/subscribe', [NewsletterController::class, 'subscribe'])->middleware('throttle:5,10')->name('newsletter.subscribe');
 
-Route::post('/contact', [ContactController::class, 'submit'])
-    ->middleware('throttle:10,1')
-    ->name('contact.submit');
+Route::post('/contact', [ContactController::class, 'submit'])->middleware('throttle:10,1')->name('contact.submit');
 
 Route::middleware('auth')->group(function () {
     Route::post('/posts/{post}/like', [PostLikeController::class, 'toggle'])
@@ -95,13 +91,13 @@ Route::middleware(['auth', 'verified', 'admin'])->prefix('admin')->group(functio
 });
 
 Route::middleware(['auth', 'verified', 'author'])->prefix('admin')->name('admin.')->group(function () {
-    Route::get('posts/trashed', [AdminPostController::class, 'trashed'])->name('posts.trashed');
-    Route::patch('posts/{post}/restore', [AdminPostController::class, 'restore'])->withTrashed()->name('posts.restore');
-    Route::post('posts/{post}/publish', [AdminPostController::class, 'publish'])->name('posts.publish');
-    Route::post('posts/{post}/unpublish', [AdminPostController::class, 'unpublish'])->name('posts.unpublish');
-    Route::post('posts/{post}/schedule', [AdminPostController::class, 'schedule'])->name('posts.schedule');
-    Route::post('posts/{post}/archive', [AdminPostController::class, 'archive'])->name('posts.archive');
-    Route::post('posts/{post}/draft', [AdminPostController::class, 'draft'])->name('posts.draft');
+    Route::get('posts/trashed',             [AdminPostController::class, 'trashed'])->name('posts.trashed');
+    Route::patch('posts/{post}/restore',    [AdminPostController::class, 'restore'])->withTrashed()->name('posts.restore');
+    Route::post('posts/{post}/publish',     [AdminPostController::class, 'publish'])->name('posts.publish');
+    Route::post('posts/{post}/unpublish',   [AdminPostController::class, 'unpublish'])->name('posts.unpublish');
+    Route::post('posts/{post}/schedule',    [AdminPostController::class, 'schedule'])->name('posts.schedule');
+    Route::post('posts/{post}/archive',     [AdminPostController::class, 'archive'])->name('posts.archive');
+    Route::post('posts/{post}/draft',       [AdminPostController::class, 'draft'])->name('posts.draft');
     Route::resource('posts', AdminPostController::class);
 });
 
@@ -135,26 +131,26 @@ Route::middleware(['auth', 'verified', 'admin'])->prefix('admin')->name('admin.'
 });
 
 Route::middleware(['auth', 'verified', 'admin'])->prefix('admin')->name('admin.')->group(function () {
-    Route::get('users', [AdminUserController::class, 'index'])->name('users.index');
-    Route::get('users/{user}/edit', [AdminUserController::class, 'edit'])->name('users.edit');
-    Route::patch('users/{user}', [AdminUserController::class, 'update'])->name('users.update');
-    Route::post('users/{user}/activate', [AdminUserController::class, 'activate'])->name('users.activate');
-    Route::post('users/{user}/deactivate', [AdminUserController::class, 'deactivate'])->name('users.deactivate');
-    Route::delete('users/{user}', [AdminUserController::class, 'destroy'])->name('users.destroy');
+    Route::get('users',                     [AdminUserController::class, 'index'])->name('users.index');
+    Route::get('users/{user}/edit',         [AdminUserController::class, 'edit'])->name('users.edit');
+    Route::patch('users/{user}',            [AdminUserController::class, 'update'])->name('users.update');
+    Route::post('users/{user}/activate',    [AdminUserController::class, 'activate'])->name('users.activate');
+    Route::post('users/{user}/deactivate',  [AdminUserController::class, 'deactivate'])->name('users.deactivate');
+    Route::delete('users/{user}',           [AdminUserController::class, 'destroy'])->name('users.destroy');
 
-    Route::get('media', [MediaController::class, 'index'])->name('media.index');
-    Route::post('media', [MediaController::class, 'store'])->name('media.store');
-    Route::patch('media/{media}', [MediaController::class, 'update'])->name('media.update');
-    Route::delete('media/{media}', [MediaController::class, 'destroy'])->name('media.destroy');
+    Route::get('media',                     [MediaController::class, 'index'])->name('media.index');
+    Route::post('media',                    [MediaController::class, 'store'])->name('media.store');
+    Route::patch('media/{media}',           [MediaController::class, 'update'])->name('media.update');
+    Route::delete('media/{media}',          [MediaController::class, 'destroy'])->name('media.destroy');
 
-    Route::get('settings', [SettingController::class, 'index'])->name('settings.index');
-    Route::patch('settings', [SettingController::class, 'update'])->name('settings.update');
+    Route::get('settings',                  [SettingController::class, 'index'])->name('settings.index');
+    Route::patch('settings',                [SettingController::class, 'update'])->name('settings.update');
 });
 
 Route::middleware('auth')->group(function () {
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+    Route::get('/profile',      [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::patch('/profile',    [ProfileController::class, 'update'])->name('profile.update');
+    Route::delete('/profile',   [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
 require __DIR__.'/auth.php';

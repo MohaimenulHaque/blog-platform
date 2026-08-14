@@ -87,7 +87,6 @@ class PostController extends Controller
     public function create(): View
     {
         $this->authorize('create', Post::class);
-
         return view('admin.posts.create', $this->formData());
     }
 
@@ -97,13 +96,9 @@ class PostController extends Controller
     public function store(StorePostRequest $request): RedirectResponse
     {
         $this->authorize('create', Post::class);
-
         $post = $this->posts->create($request->validated(), $request->user()->id);
-
         $this->posts->storeImages($post, $request->all());
-
-        return Redirect::route('admin.posts.edit', $post)
-            ->with('status', 'Post created.');
+        return Redirect::route('admin.posts.edit', $post)->with('status', 'Post created.');
     }
 
     /**

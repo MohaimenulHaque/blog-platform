@@ -46,6 +46,10 @@ class User extends Authenticatable implements MustVerifyEmail
         'remember_token',
     ];
 
+    protected $appends = [
+        'avatar_url',
+    ];
+
     /**
      * Get the attributes that should be cast.
      *

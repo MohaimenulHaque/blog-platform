@@ -58,6 +58,7 @@
             },
             file_picker_types: 'image',
             content_style: [
+                '@import url("https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700;800&display=swap");',
                 'body { font-family: Inter, ui-sans-serif, system-ui, sans-serif; font-size: 15px; line-height: 1.7; color: #1c1917; }',
                 'h1,h2,h3,h4 { font-family: Fraunces, ui-serif, Georgia, serif; letter-spacing: -0.02em; }',
                 'table { border-collapse: collapse; width: 100%; }',
